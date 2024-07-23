@@ -50,7 +50,7 @@ Converts JPG and PNG images to `.avif` files using `libavif` with the appended e
 
 ## Render Images
 
-To render images in templates, you can either set up nginx or apache rules to serve images dynamically or used the
+To render images in templates, you can either set up nginx or apache rules to serve images dynamically or use the
 `squidge_image` helper function. This dynamically checks if an `.avif` or `.webp` file is available on the file system
 and returns the output.
 
