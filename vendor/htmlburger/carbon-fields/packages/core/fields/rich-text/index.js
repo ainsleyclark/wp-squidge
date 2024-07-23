@@ -9,7 +9,6 @@ import {
 	debounce
 } from 'lodash';
 import cx from 'classnames';
-import observe from 'observe-resize';
 
 class RichTextField extends Component {
 	/**
@@ -33,7 +32,7 @@ class RichTextField extends Component {
 		if ( this.props.visible ) {
 			this.timer = setTimeout( this.initEditor, 250 );
 
-			this.cancelObserver = observe( this.node.current, debounce( () => {
+			const resizeObserver = new ResizeObserver( debounce( () => {
 				if ( this.editor ) {
 					/**
 					 * On each call of the `wpAutoResize` method the global `wpActiveEditor` reference
@@ -46,6 +45,10 @@ class RichTextField extends Component {
 					window.wpActiveEditor = activeEdtior;
 				}
 			}, 100 ) );
+
+			resizeObserver.observe( this.node.current );
+
+			this.observer = resizeObserver;
 		}
 	}
 
@@ -57,8 +60,8 @@ class RichTextField extends Component {
 	componentWillUnmount() {
 		clearTimeout( this.timer );
 
-		if ( typeof this.cancelObserver !== 'undefined' ) {
-			this.cancelObserver();
+		if ( typeof this.observer !== 'undefined' ) {
+			this.observer.disconnect();
 		}
 
 		this.destroyEditor();
