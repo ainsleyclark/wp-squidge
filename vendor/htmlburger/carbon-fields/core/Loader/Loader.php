@@ -204,11 +204,12 @@ class Loader {
 	 */
 	public function enqueue_assets() {
 		global $pagenow;
+		global $wp_version;
 
 		$this->enqueue_style( 'core' );
 		$this->enqueue_style( 'metaboxes' );
 
-		$this->enqueue_script( 'vendor', array( 'wp-polyfill', 'jquery' ) );
+		$this->enqueue_script( 'vendor', array( 'wp-polyfill', 'jquery', 'lodash' ) );
 		$this->enqueue_script( 'core', array( 'carbon-fields-vendor' ) );
 		$this->enqueue_script( 'metaboxes', array( 'carbon-fields-vendor', 'carbon-fields-core' ) );
 
@@ -229,6 +230,7 @@ class Loader {
 				'compactInput' => \Carbon_Fields\COMPACT_INPUT,
 				'compactInputKey' => \Carbon_Fields\COMPACT_INPUT_KEY,
 				'revisionsInputKey' => $revisions::CHANGE_KEY,
+				'wp_version' => $wp_version,
 			)
 		) ) );
 	}
